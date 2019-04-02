@@ -30,11 +30,11 @@
 =destruir
 
 ==Verificar InserirEsquerda com Árvore inexistente.
-=insesq     'c' 0
+=insesq     'c' 1 1 1 0
 =destruir
 
 ==Verificar InserirDireita com Árvore inexistente.
-=insdir     'c' 0
+=insdir     'c' 1 1 1 0
 =destruir
 
 == Criar árvore
@@ -50,7 +50,7 @@
 =irdir      5
 
 == Inserir à direita
-=insdir     'a'   0
+=insdir     'a'   1   1   1   0
 
 == Obter o valor inserido
 =obter      'a'   0
@@ -63,7 +63,7 @@
 =irdir      7
   
 == Inserir à esquerda
-=insesq     'b'   0
+=insesq     'b'   1   1   1   0
 
 == Obter o valor inserido
 =obter      'b'   0
@@ -77,10 +77,10 @@
 =obter      'a'   0
 
 == Verificar InserirEsquerda quando já existir filho
-=insesq     'q' 3
+=insesq     'q' 1 1 1 3
 
 == Inserir à direita
-=insdir     'c'   0
+=insdir     'c'   1   1   1   0
 =obter      'c'   0
 
 == Ir para no pai
@@ -92,7 +92,7 @@
 =obter      'a'   0
 
 == Verificar InserirDireita quando já existir filho
-=insdir     'q' 3
+=insdir     'q' 1 1 1 3
 
 == Ir para no esquerda, quando tiver
 =iresq      0
