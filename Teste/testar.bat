@@ -1,1 +1,1 @@
-T1_modular.exe /sTesteArvore >log_saida.txt
+T1_modular.exe /sTesteArvore >saida.log
