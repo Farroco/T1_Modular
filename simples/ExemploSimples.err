@@ -1,0 +1,14 @@
+TestArv.c
+Arvore.c
+c:\users\farroco\documents\programa‡ao modular\t1 modular\arcabou‡o\simples\arvore.c(528) : warning C4715: 'CriaVetor' : not all control paths return a value
+Microsoft (R) Incremental Linker Version 10.00.30319.01
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/OUT:ExemploSimples.exe 
+/INCREMENTAL:NO 
+/MACHINE:IX86 
+TestArv.obj Arvore.obj 
+ArcaboucoTeste.lib 
+Arvore.obj : error LNK2019: unresolved external symbol _LIS_InserirElementoAntes referenced in function _CriarNo
+Arvore.obj : error LNK2019: unresolved external symbol _LIS_CriarLista referenced in function _CriarNo
+ExemploSimples.exe : fatal error LNK1120: 2 unresolved externals
