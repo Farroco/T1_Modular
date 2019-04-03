@@ -1,0 +1,1 @@
+T1_modular.exe /sTesteErro >ErroSaida.log

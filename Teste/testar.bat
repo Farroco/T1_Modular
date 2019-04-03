@@ -1,1 +1,0 @@
-T1_modular.exe /sTesteArvore >saida.log

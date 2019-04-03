@@ -1,0 +1,1 @@
+T1_modular.exe /sTesteCompleto >CompletoSaida.log

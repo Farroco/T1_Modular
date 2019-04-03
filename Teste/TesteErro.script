@@ -1,0 +1,48 @@
+// Script:    TesteErro.script
+// Autor:     Daniel Weil e Iago Farroco
+// Data:      03/abr/2019
+// Propósito: Criar erros propositadamente e ilustrar o motivo dos mesmos.
+
+
+== Verificar assertivas de entrada de irdir
+=irdir      5
+//ERRO INDUZIDO: Como a árvore ainda não foi criada, a condição de retorno esperada deveria ser ARV_CondRetArvoreNaoExiste e não ARV_CondRetArvoreVazia.
+
+== Ir para o filho da direita
+=irdir      0
+//ERRO INDUZIDO: Se não existe árvore, não tem filho a direita. Como a condição de retorno esperada está ARV_CondRetOK, deu erro.
+
+== Verificar ObterValorCorr
+=obter      '!'   1
+//ERRO INDUZIDO: Se não existe árvore, não tem valor. Como a condição de retorno esperada está ARV_CondRetErroEstrutura, deu erro.
+
+== Criar árvore
+=criar      1
+//ERRO INDUZIDO: Como a condição de retorno esperada está ARV_CondRetNaoCriouRaiz e a função de criar pode retornar apenas ARV_CondRetFaltouMemoria ou ARV_CondRetOK, deu erro.
+
+== Testar ir direita
+=criar      0
+=irdir      4
+//ERRO INDUZIDO: Como a condição de retorno esperada está ARV_CondRetArvoreNaoExiste, dá erro, pois era pra ser ARV_CondRetArvoreVazia visto que a árvore foi criada porém nenhum nó foi inserido.
+
+== Inserir à direita
+=insdir     1   0
+//ERRO INDUZIDO: A função de inserir espera como parâmetro um char e três ints e não apenas um int, então ele retorna erro de parâmetro (caso que não é tratado nas condições de retorno).
+
+== Obter o valor inserido
+=insdir     'a'   1   1   1   0
+=obter      'b'   0
+//ERRO INDUZIDO: Inserimos no nó o valor 'b' e pedimos para obter esse valor dizendo que o valor esperado é 'a'.
+
+== Testar ir pro pai
+=irpai      0
+//ERRO INDUZIDO: Como inserimos apenas um nó na arvore, ele é o nó raiz, e o nó raiz não possui pai. Com isso, a condição de retorno esperada deveria ser ARV_CondRetNohEhRaiz e não ARV_CondRetOK.
+  
+== Inserir à esquerda
+=insdir     'b'   1   1   1   0
+=irpai      0
+=insdir     'c'   1   1   1   0
+//ERRO INDUZIDO: Como voltamos para o nó pai antes de fazer a inserção, estamos tentando fazer uma inserção em um espaço no qual já existe um nó, então o retorno esperado deveria ser ARV_CondRetNaoEhFolha e não ARV_CondRetOK.
+
+
+// fim
