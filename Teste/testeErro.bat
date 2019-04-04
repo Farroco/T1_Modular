@@ -1,1 +1,1 @@
-T1_modular.exe /sTesteErro >ErroSaida.log
+TRAB1-1.exe /sTesteErro >saidaErro.log

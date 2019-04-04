@@ -1,1 +1,1 @@
-T1_modular.exe /sTesteCorrige >CorrigeSaida.log
+TRAB1-1.exe /sTesteCorrige >saidaCorrige.log

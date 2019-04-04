@@ -1,1 +1,1 @@
-T1_modular.exe /sTesteCompleto >CompletoSaida.log
+TRAB1-1.exe /sTesteCompleto >saidaCompleto.log
