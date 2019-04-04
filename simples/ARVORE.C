@@ -10,13 +10,18 @@
 *  Projeto: Disciplinas INF 1628 / 1301
 *  Gestor:  DI/PUC-Rio
 *  Autores: avs - Arndt von Staa
+*			irf - Iago Ribeiro Farroco
 *
 *  $HA Histórico de evolução:
-*     Versão  Autor    Data     Observações
-*       3.00   avs   28/02/2003 Uniformização da interface das funções e
-*                               de todas as condições de retorno.
-*       2.00   avs   03/08/2002 Eliminação de código duplicado, reestruturação
-*       1.00   avs   15/08/2001 Início do desenvolvimento
+*     Versão   Autor    Data     Observações
+*		3.50   irf	  03/04/2019 Fazendo as funções de costura e de impressão receberem parâmetro valor esperado pelo script.
+*		3.40   irf	  01/03/2019 Padronizando código.
+*		3.20   irf    27/03/2019 Adicionada a função de imprimir a costura.
+*		3.10   irf    25/03/2019 Adicionadas as funçôes de criar vetor e costura das folhas.
+*       3.00   avs    28/02/2003 Uniformização da interface das funções e
+*                                de todas as condições de retorno.
+*       2.00   avs    03/08/2002 Eliminação de código duplicado, reestruturação
+*       1.00   avs    15/08/2001 Início do desenvolvimento
 *
 ***************************************************************************/
 
@@ -103,15 +108,14 @@
 
       static tpArvore * pArvore = NULL ;
 
-	  static tpNoArvore ** vetor = NULL;
-	  
+	  static tpNoArvore ** vetor = NULL ;
             /* Ponteiro para a cabe‡a da árvore */
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-   static tpNoArvore * CriarNo( char ValorParm, int first, int second, int third ) ;
+   static tpNoArvore * CriarNo( char ValorParm, int pri, int sci, int la ) ;
 
-   static ARV_tpCondRet CriarNoRaiz( char ValorParm, int first, int second, int third ) ;
+   static ARV_tpCondRet CriarNoRaiz( char ValorParm, int pri, int sci, int la ) ;
 
    static void DestroiArvore( tpNoArvore * pNo ) ;
 
@@ -172,7 +176,7 @@
 *  Função: ARV Adicionar filho à esquerda
 *  ****/
 
-   ARV_tpCondRet ARV_InserirEsquerda( char ValorParm, int first, int second, int third )
+   ARV_tpCondRet ARV_InserirEsquerda( char ValorParm, int pri, int sci, int la )
    {
 
       ARV_tpCondRet CondRet ;
@@ -182,7 +186,7 @@
 
       /* Tratar vazio, esquerda */
 
-         CondRet = CriarNoRaiz( ValorParm, first, second, third ) ;
+         CondRet = CriarNoRaiz( ValorParm, pri, sci, la ) ;
          if ( CondRet != ARV_CondRetNaoCriouRaiz )
          {
             return CondRet ;
@@ -198,14 +202,15 @@
                
          if ( pCorr->pNoEsq == NULL )
          {
-            pNo = CriarNo( ValorParm, first, second, third ) ;
+            pNo = CriarNo( ValorParm, pri, sci, la ) ;
             if ( pNo == NULL )
             {
                return ARV_CondRetFaltouMemoria ;
             } /* if */
-            pNo->pNoPai      = pCorr ;
-            pCorr->pNoEsq    = pNo ;
-            pArvore->pNoCorr = pNo ;
+
+            pNo->pNoPai        = pCorr ;
+            pCorr->pNoEsq      = pNo ;
+            pArvore->pNoCorr   = pNo ;
 			pNo->pNoPai->Valor = NULL ;
 
             return ARV_CondRetOK ;
@@ -222,7 +227,7 @@
 *  Função: ARV Adicionar filho à direita
 *  ****/
 
-   ARV_tpCondRet ARV_InserirDireita( char ValorParm, int pri, int seg, int ter )
+   ARV_tpCondRet ARV_InserirDireita( char ValorParm, int pri, int sci, int la )
    {
 
       ARV_tpCondRet CondRet ;
@@ -232,7 +237,7 @@
 
       /* Tratar vazio, direita */
 
-         CondRet = CriarNoRaiz( ValorParm, pri, seg, ter ) ;
+         CondRet = CriarNoRaiz( ValorParm, pri, sci, la ) ;
          if ( CondRet != ARV_CondRetNaoCriouRaiz )
          {
             return CondRet ;
@@ -248,11 +253,12 @@
 
          if ( pCorr->pNoDir == NULL )
          {
-            pNo = CriarNo( ValorParm, pri, seg, ter ) ;
+            pNo = CriarNo( ValorParm, pri, sci, la ) ;
             if ( pNo == NULL )
             {
                return ARV_CondRetFaltouMemoria ;
             } /* if */
+
             pNo->pNoPai      = pCorr ;
             pCorr->pNoDir    = pNo ;
             pArvore->pNoCorr = pNo ;
@@ -279,6 +285,7 @@
       {
          return ARV_CondRetArvoreNaoExiste ;
       } /* if */
+
       if ( pArvore->pNoCorr == NULL )
       {
          return ARV_CondRetArvoreVazia ;
@@ -361,10 +368,12 @@
       {
          return ARV_CondRetArvoreNaoExiste ;
       } /* if */
+
       if ( pArvore->pNoCorr == NULL )
       {
          return ARV_CondRetArvoreVazia ;
       } /* if */
+
       * ValorParm = pArvore->pNoCorr->Chave ;
       return ARV_CondRetOK ;
 
@@ -386,7 +395,7 @@
 *
 ***********************************************************************/
 
-   tpNoArvore * CriarNo( char ValorParm, int first, int second, int third )
+   tpNoArvore * CriarNo( char ValorParm, int pri, int sci, int la )
    {
 	  tpNoArvore * pNo ;
       pNo = ( tpNoArvore * ) malloc( sizeof( tpNoArvore )) ;
@@ -402,9 +411,9 @@
 	  pNo->next   = NULL ;
 	  pNo->Chave  = ValorParm ; /* Usa a variavel valorParm que é passada no script como chave */
 	  
-	  LIS_InserirElementoAntes(pNo->Valor, &third) ; /* Insere o terceiro elemento na lista */
-	  LIS_InserirElementoAntes(pNo->Valor, &second) ; /* Insere o segundo elemento na lista */
-	  LIS_InserirElementoAntes(pNo->Valor, &first) ; /* Insere o primeiro elemento na lista */
+	  LIS_InserirElementoAntes(pNo->Valor, &la) ; /* Insere o terceiro elemento na lista */
+	  LIS_InserirElementoAntes(pNo->Valor, &sci) ; /* Insere o segundo elemento na lista */
+	  LIS_InserirElementoAntes(pNo->Valor, &pri) ; /* Insere o primeiro elemento na lista */
       
 	  return pNo ;
 
@@ -422,7 +431,7 @@
 *
 ***********************************************************************/
 
-   ARV_tpCondRet CriarNoRaiz( char ValorParm, int first, int second, int third )
+   ARV_tpCondRet CriarNoRaiz( char ValorParm, int pri, int sci, int la )
    {
 
       ARV_tpCondRet CondRet ;
@@ -440,11 +449,12 @@
 
       if ( pArvore->pNoRaiz == NULL )
       {
-         pNo = CriarNo( ValorParm, first, second, third ) ;
+         pNo = CriarNo( ValorParm, pri, sci, la ) ;
          if ( pNo == NULL )
          {
             return ARV_CondRetFaltouMemoria ;
          } /* if */
+
          pArvore->pNoRaiz = pNo ;
          pArvore->pNoCorr = pNo ;
 
@@ -482,36 +492,40 @@
    } /* Fim função: ARV Destruir a estrutura da árvore */
 
    
-   /***********************************************************************
-   *  $FC Função: ARV Criar Vetor para ordenear as folhas da árvore
-   *  
-   *  $FV Valor retornado
-   *	 ARV_CondRetOK
-   *	 ARV_CondRetFaltouMemoria
-   *	 ARV_CondRetNaoCriouRaiz
-   ***********************************************************************/
+/***********************************************************************
+*  $FC Função: ARV Criar Vetor para ordenar as folhas da árvore
+*  
+*
+*  $EAE Assertivas de entradas esperadas
+*  pNo != NULL
+*
+*  $FV Valor retornado
+*	 ARV_CondRetOK
+*	 ARV_CondRetFaltouMemoria
+*	 ARV_CondRetNaoCriouRaiz
+***********************************************************************/
 
 
-   ARV_tpCondRet CriaVetor( struct tgNoArvore * pNo , int * j)
+   ARV_tpCondRet CriaLista( struct tgNoArvore * pNo , int * j)
    {
 	   if (pNo == NULL)
 	   {
-		/* Verifica se raiz foi criada */
-
+		/* Verifica se existe raiz */
 		if (*j == 0)
 		{
 			return ARV_CondRetNaoCriouRaiz ;
 		}/* if */
 
+		/* Caso base */
 		return ARV_CondRetOK ;
 	   }/* if */
 
-	   if (!pNo->pNoDir && !pNo->pNoEsq)  //verifica se o nó é folha
+	   if (!pNo->pNoDir && !pNo->pNoEsq)
 	   {
 		   *j+=1 ;
-		   vetor = (tpNoArvore **)realloc(vetor,*j*sizeof(tpNoArvore*)) ; // para cada nó folha, o vetor e realocado e o ponteiro para o nó inserido nele
+		   vetor = (tpNoArvore **)realloc(vetor,*j*sizeof(tpNoArvore*)) ;
 		   
-		   /* Verifica se faltou memória para alocar */
+		   /* Verifica se deu erro na alocação */
 
 		   if (vetor[*j] == NULL)
 		   {
@@ -522,41 +536,59 @@
 
 	   }/* if */
 
-	   CriaVetor(pNo->pNoDir, j) ;
-	   CriaVetor(pNo->pNoEsq, j) ;   
+	   CriaLista(pNo->pNoDir, j) ;
+	   CriaLista(pNo->pNoEsq, j) ;   
 
-   }
+   }/* Fim função: ARV Criar Vetor para ordenar as folhas da árvore */
 
-   /* Fim função: ARV Criar Vetor para ordenear as folhas da árvore */
+/***********************************************************************
+*
+*  $FC Função: Comparar as chaves dos nós da arvore para usar na qsort
+*
+*  $EAE Assertivas de entradas esperadas
+*  a != NULL
+*  b != NULL
+*
+***********************************************************************/
 
+   static int compararNome(const void * a, const void * b)
+   {
 
-	static int compararNome(const void * a, const void * b)  //funçao compara para ordenar o vetor
-	{
 		tpNoArvore** NoA = (tpNoArvore **)a ;
 		tpNoArvore** NoB = (tpNoArvore **)b ;
-		return ((*NoA)->Chave > (*NoB)->Chave) ;
+		return (( *NoA )->Chave > ( *NoB )->Chave) ;
 
-	}
+   }/* Fim função: Comparar os nós da arvore */
 
-	void DestruirValor( void * pValor ) //funçao usada para criar a lista
+/***********************************************************************
+*
+*  $FC Função: Destroi valor
+*
+*  $EAE Assertivas de entradas esperadas
+*  pValor != NULL
+
+***********************************************************************/
+
+	void DestruirValor( void * pValor )
    {
 
       free( pValor ) ;
 
-   }
+	}/* Fim função: Destroi valor */
 
-   /***********************************************************************
-   *  $FC Função: ARV Costura folhas da árvore
-   *  
-   *  $FV Valor retornado
-   *	 ARV_CondRetOK
-   ***********************************************************************/
+/***********************************************************************
+*  $FC Função: ARV Costura folhas
+*  
+*  $FV Valor retornado
+*   ARV_CondRetOK
+***********************************************************************/
 
-	ARV_tpCondRet ARV_Costura( void )
-	{ 
-		int i, j = 0 ;
+   ARV_tpCondRet ARV_CosturarFolhas( void )
+   { 
 		ARV_tpCondRet CondRet ;
-		CondRet=CriaVetor(pArvore->pNoRaiz, &j) ;
+		int i, j = 0 ;
+		
+		CondRet = CriaLista(pArvore->pNoRaiz, &j) ;
 		
 		qsort (vetor, j, sizeof(tpNoArvore*), compararNome) ;
 		
@@ -566,27 +598,29 @@
 		}
 
 		return CondRet ;
-	}
+   }/* Fim função: ARV Costura folhas da árvore */
 
-	/* Fim função: ARV Costura folhas da árvore */
+/***********************************************************************
+*  $FC Função: ARV Imprime costura na ordem
+*  
+*  $FV Valor retornado
+*	 ARV_CondRetOK
+***********************************************************************/
 
-   /***********************************************************************
-   *  $FC Função: ARV Imprime costura
-   *  
-   *  $FV Valor retornado
-   *	 ARV_CondRetOK
-   ***********************************************************************/
-
-   ARV_tpCondRet ARV_Imprime( void )
+   ARV_tpCondRet ARV_ImprimirFolhasNaOrdem( void )
    { 
 		int i ;
-		printf("\nOrdem de costura: %c", vetor[0]->Chave) ;
+		
+		printf("\n\n\tOrdem de costura: %c", vetor[0]->Chave) ;
+		
 		for(i=0; vetor[i]->next!=NULL; i++)
 		{
 			printf(" --> %c", vetor[i]->next->Chave) ;
 		}
+		
+		printf("\n");
+
 		return ARV_CondRetOK ;
-   }
-   /* Fim função: ARV Imprime costura */
+   }/* Fim função: ARV Imprime costura */
 
 /********** Fim do módulo de implementação: Módulo árvore **********/

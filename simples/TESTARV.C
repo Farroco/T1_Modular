@@ -10,16 +10,21 @@
 *  Projeto: Disciplinas INF 1628 / 1301
 *  Gestor:  DI/PUC-Rio
 *  Autores: avs - Arndt von Staa
+*			irf - Iago Ribeiro Farroco
 *
 *  $HA Histórico de evolução:
-*     Versão  Autor    Data     Observações
-*       3.00   avs   28/02/2003 Uniformização da interface das funções e
-*                               de todas as condições de retorno.
-*       2.00   avs   03/08/2002 Eliminação de código duplicado, reestruturação
-*       1.00   avs   15/08/2001 Início do desenvolvimento
+*     Versão   Autor    Data     Observações
+*		3.50   irf	  03/04/2019 Fazendo as funções de costura e de impressão receberem parâmetro valor esperado pelo script.
+*		3.40   irf	  01/03/2019 Padronizando código.
+*		3.20   irf    27/03/2019 Adicionada a função de imprimir a costura.
+*		3.10   irf    25/03/2019 Adicionadas as funçôes de criar vetor e costura das folhas.
+*       3.00   avs    28/02/2003 Uniformização da interface das funções e
+*                                de todas as condições de retorno.
+*       2.00   avs    03/08/2002 Eliminação de código duplicado, reestruturação
+*       1.00   avs    15/08/2001 Início do desenvolvimento
 *
 *  $ED Descrição do módulo
-*     Este mÇodulo contém as funções específicas para o teste do
+*     Este módulo contém as funções específicas para o teste do
 *     módulo árvore. Ilustra como redigir um interpretador de comandos
 *     de teste específicos utilizando o arcabouço de teste para C.
 *
@@ -41,7 +46,8 @@
 *                   - chama a função ARV_ObterValorCorr( ) e compara
 *                     o valor retornado com o valor <Char>
 *     "=destroi"    - chama a função ARV_DestruirArvore( )
-*
+*	  "=costura"    - chama a função ARV_Costura( )
+*	  "=imprime"    - chama a função ARV_Imprime( )
 ***************************************************************************/
 
 #include    <string.h>
@@ -65,8 +71,8 @@
 #define     IR_DIR_CMD          "=irdir"
 #define     OBTER_VAL_CMD       "=obter"
 #define     DESTROI_CMD         "=destruir"
-#define		COSTURA_CMD			"=costura" //acrescentado comando costura para testar
-#define		IMPRIME_CMD			"=imprime" //comando de imprimir
+#define		COSTURA_CMD			"=costura"
+#define		IMPRIME_CMD			"=imprime"
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -97,7 +103,7 @@
       char ValorEsperado = '?'  ;
       char ValorObtido   = '!'  ;
       char ValorDado     = '\0' ;
-	  int ValorDado1     =  0   ; //ponteiros para inteiros a serem inseridos na lista
+	  int ValorDado1     =  0   ;
 	  int ValorDado2     =  0   ;
 	  int ValorDado3     =  0   ;
 
@@ -252,21 +258,43 @@
 
             return TST_CondRetOK ;
 
-         }
-		 /* fim ativa: Testar ARV Destruir árvore */
-		 else if ( strcmp (ComandoTeste, COSTURA_CMD ) == 0 ) //comando que chama as funçoes criadas no Arvore.c
-		 {
-			 ARV_Costura( ) ;
-		
-			 return TST_CondRetOK ;
-		 }
+         }/* fim ativa: Testar ARV Destruir árvore */
 
-		 else if ( strcmp (ComandoTeste, IMPRIME_CMD ) == 0 ) //comando que imprime a costura
+	  /* Testar ARV Costurar folhas da árvore */
+
+		 else if ( strcmp (ComandoTeste, COSTURA_CMD ) == 0 )
 		 {
-			 ARV_Imprime( ) ;
+			NumLidos = LER_LerParametros( "i" ,
+                               &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			 CondRetObtido = ARV_CosturarFolhas( ) ;
 			
-			 return TST_CondRetOK ;
-		 }
+			 return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+                                    "Não foi possível realizar a costura." );
+		 }/* fim ativa: Testar ARV Costurar folhas da árvore */
+
+		 /* Testar ARV Imprimir costura */
+
+		 else if ( strcmp (ComandoTeste, IMPRIME_CMD ) == 0 )
+		 {
+
+			NumLidos = LER_LerParametros( "i" ,
+                               &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			 CondRetObtido = ARV_ImprimirFolhasNaOrdem( ) ;
+			
+			 return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+                                    "Não foi possível realizar a impressão." );
+
+		 }/* fim ativa: Testar ARV Imprimir costura */
 
 
       return TST_CondRetNaoConhec ;

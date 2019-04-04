@@ -13,13 +13,18 @@
 *  Projeto: Disciplinas INF 1628 / 1301
 *  Gestor:  DI/PUC-Rio
 *  Autores: avs - Arndt von Staa
+*			irf - Iago Ribeiro Farroco
 *
 *  $HA Histórico de evolução:
-*     Versão  Autor    Data     Observações
-*       3.00   avs   28/02/2003 Uniformização da interface das funções e
-*                               de todas as condições de retorno.
-*       2.00   avs   03/08/2002 Eliminação de código duplicado, reestruturação
-*       1.00   avs   15/08/2001 Início do desenvolvimento
+*     Versão   Autor    Data     Observações
+*		3.50   irf	  03/04/2019 Fazendo as funções de costura e de impressão receberem parâmetro valor esperado pelo script.
+*		3.40   irf	  01/03/2019 Padronizando código.
+*		3.20   irf    27/03/2019 Adicionada a função de imprimir a costura.
+*		3.10   irf    25/03/2019 Adicionadas as funçôes de criar vetor e costura das folhas.
+*       3.00   avs    28/02/2003 Uniformização da interface das funções e
+*                                de todas as condições de retorno.
+*       2.00   avs    03/08/2002 Eliminação de código duplicado, reestruturação
+*       1.00   avs    15/08/2001 Início do desenvolvimento
 *
 *  $ED Descrição do módulo
 *     Este módulo implementa um conjunto simples de funções para criar e
@@ -82,6 +87,32 @@
 
 /***********************************************************************
 *
+*  $FC Função: ARV Costura
+*
+*  $FV Valor retornado
+*     ARV_CondRetOK
+*     ARV_CondRetNaoCriouRaiz
+*     ARV_CondRetFaltouMemoria
+*
+***********************************************************************/
+
+   ARV_tpCondRet ARV_CosturarFolhas( void ) ;
+
+
+/***********************************************************************
+*
+*  $FC Função: ARV Imprime
+*
+*  $FV Valor retornado
+*     ARV_CondRetOK
+*
+***********************************************************************/
+
+   ARV_tpCondRet ARV_ImprimirFolhasNaOrdem( void ) ; 
+
+
+/***********************************************************************
+*
 *  $FC Função: ARV Criar árvore
 *
 *  $ED Descrição da função
@@ -125,7 +156,7 @@
 *
 ***********************************************************************/
 
-   ARV_tpCondRet ARV_InserirEsquerda( char ValorParm, int first, int second, int third ) ;
+   ARV_tpCondRet ARV_InserirEsquerda( char ValorParm, int pri, int sci, int la ) ;
 
 
 /***********************************************************************
@@ -143,7 +174,7 @@
 *
 ***********************************************************************/
 
-   ARV_tpCondRet ARV_InserirDireita( char ValorParm, int first, int second, int third ) ;
+   ARV_tpCondRet ARV_InserirDireita( char ValorParm, int pri, int sci, int la ) ;
 
 
 /***********************************************************************
@@ -207,10 +238,6 @@
 ***********************************************************************/
 
    ARV_tpCondRet ARV_ObterValorCorr( char * ValorParm ) ;
-
-   ARV_tpCondRet ARV_Imprime( void ) ; //imprime costura
-
-   ARV_tpCondRet ARV_Costura( void ) ; //chama a costura(), ordena e liga as folhas através do ponteiro next
 
 
 #undef ARVORE_EXT
