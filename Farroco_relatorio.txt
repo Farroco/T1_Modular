@@ -1,0 +1,21 @@
+Data, 		Horas Trabalhadas, 		Tipo Tarefa, 			Descrição da Tarefa Realizada
+
+16/03			4 horas 			estudar					Aprender a criar a biblioteca do arcabouço, pesquisar como importar uma biblioteca à um projeto e 																aprender a rodar um script.
+
+17/03			2 horas 			estudar					Aprender a tirar restrição de dll.
+
+19/03			2 horas 			projetar				Montar pdf pro grupo resumindo e ensinando tudo que aprendeu até agora, discutindo o futuro.
+
+28/03			3 horas 			codificar				Começar a montar a função de criar o vetor e a função de costurar as folhas.
+
+29/03			8 horas 			codificar				Terminar a função de costura e implementar a adição de listas nos nós folha.
+
+01/04			2 horas 			revisar código			Checar funções de costura e relacionados.
+
+01/04			4 horas 			revisar código			Checar se a lista está sendo devidamente inserida e se apenas os nós folha a possuem.
+
+02/04			3 horas 			testar					Testar as funções usa o script e tentando forçar erros.
+
+03/04			3 horas 			planejar teste 			Criar os scripts de teste automatizados.
+
+03/04 			1 hora 				corrigir 				Fazer com que as funções de costura e de impressão tenham um valor de retorno esperado no script.

@@ -112,6 +112,29 @@
 == Destroi a arvore
 =destruir
 
+== Cria árvore para testar costura e impressão
+=criar	0
+=insdir 'a' 1 1 1 0
+=insesq 'b' 2 2 2 0
+=insesq 'd' 3 3 3 0
+=irpai   0
+=insdir 'j' 4 4 4 0
+=irpai   0
+=irpai   0
+=insdir 'c' 5 5 5 0
+=insdir 'g' 6 6 6 0
+=irpai   0
+=insesq 'f' 7 7 7 0
+
+== Verifica a costura
+=costura   0
+
+== Verifica a impressão
+=imprime   0
+
+== Destroi a arvore
+=destruir
+
 
 
 // fim

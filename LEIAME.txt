@@ -1,0 +1,17 @@
+Integrantes do grupo:
+	Iago Ribeiro Farroco					1712827
+	Daniel Weil Lins						1711207
+
+Descrição do trabalho:
+	O trabalho tem como objetivo principal testar as funções implementadas no módulo ARVORE.C através de testes automatizados via script e a biblioteca do arcabouço. Com isso, o objetivo secundário desse trabalho é de familiarizar o aluno com o ambiente do Arcabouço e com os testes automatizados para que ele se acostume e entenda pra ter autonomia suficiente para modificar o que for necessário.
+
+Como rodar:
+	- Utilizando batch
+		Para rodar o programa basta você entrar na pasta Teste e clicar duas vezes no testaTudo.bat. Ao executar o testaTudo.bat, ele roda os seguintes scripts:
+		=> TesteCompleto.script
+		=> TesteErro.script
+		=> TesteCorrige.script
+		Esses scripts geram os arquivos saidaCompleto.log, saidaErro.log e saidaCorrige.log respectivamente. O TesteCompleto.script testa todas as funções de acesso e suas possíveis condições de retorno, o TesteErro.script força alguns erros de propósito por fins ilustrativos. Por isso, cada erro forçado tem seu comentário explicando o porquê do erro ter acontecido. Já o TesteCorrige.script pega os erros gerados pelo TesteErro.script e os recupera, resultando em um script com um total de 0 falhas.
+
+	- Utilizando o CMD (Windows)
+		Pressione a tecla Windows juntamente com a tecla R. Isso deve abrir a interface de execução de programas do Windows, então agora basta digitar "cmd" e pressionar Enter para abrir o CMD. Após aberto o CMD, vc deve digitar "cd" e depois o diretório da pasta onde se encontra o arquivo TRAB1-1.exe. Com isso, você deve digitar "TRAB1-1.exe /sTesteCompleto >saidaCompleto.log" para executar o script de teste completo, "TRAB1-1.exe /sTesteErro >saidaErro.log" para executar o script de erros e "TRAB1-1.exe /sTesteCorrige >saidaCorrige.log" para executar o script de correção. Após executar qualquer um desses comandos, deverá ser criado um arquivo de log na pasta com o nome que vc usou no comando (exemplo: saidaErro.log) que você poderá acessa para ver o resultado do script. 
